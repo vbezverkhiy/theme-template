@@ -1,0 +1,22 @@
+{
+  "name": "wmc-template",
+  "version": "1.0.0",
+  "description": "Template/Theme structure for Warner Music",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/vbezverkhiy/wmc-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/vbezverkhiy/wmc-template#readme",
+  "dependencies": {
+    "susy": "^3.0.5"
+  },
+  "devDependencies": {
+    "sass-lint": "^1.12.1"
+  }
+}
