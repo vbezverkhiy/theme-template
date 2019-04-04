@@ -1,0 +1,173 @@
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+$font-size-small: 14;
+$font-size-regular: 16;
+$font-size-large: 24;
+$font-size-x-large: 32;
+$font-size-xx-large: 48;
+$font-size-xxx-large: 64;
+$font-size-xxxx-large: 96;
+
+
+$default-font-family: 'Open Sans';
+
+$header-font-size-base: $font-size-small;
+
+
+$font-weight-types: (
+  light: 300,
+  normal: 400,
+  semibold: 500,
+  bold: 600
+);
+
+$google-fonts-font-types: (
+  'Light': 300,
+  'Regular': 400,
+  'SemiBold': 500,
+  'Bold': 600,
+  'ExtraBold': 700
+);
+
+$default-font-path-prefix: '..';
+
+@function wmg-scale-font-size($size, $scale) {
+  @return $size * $scale;
+}
+
+@function wmg-get-font-size-scale($size, $base: $font-size-small) {
+  @return $size / $base;
+}
+
+@mixin wmg-font-face($name: 'Open Sans', $file-name: 'OpenSans',  $path: '/fonts/OpenSans', $font-weight: 'Light' 'Regular' 'SemiBold' 'Bold', $path-prefix: $default-font-path-prefix, $google-fonts: true) {
+
+  @if ($google-fonts) {
+    @each $type in $font-weight {
+      @if (map-has-key($google-fonts-font-types, $type)) {
+        $weight: map-get($google-fonts-font-types, $type);
+        @font-face {
+          font-family: $name;
+          font-style: normal;
+          font-weight: $weight;
+          src: url('#{$path-prefix}/#{$path}/#{$file-name}-#{$type}.ttf') format('truetype');
+        }
+      }
+
+    }
+  } @else {
+    @font-face {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      src: url('#{$path-prefix}/#{$path}/#{$file-name}-#{$type}.ttf') format('truetype');
+    }
+  }
+}
+
+@mixin wmg-font-family($family: $default-font-family, $falbacks: 'sans-serif') {
+  font-family: #{$family}, #{$falbacks};
+}
+
+
+@mixin wmg-header-margin($scale: 1, $size: $font-size-small, $unit: 1px) {
+  $default-size: $scale * $size * $unit;
+  $margin-top: $default-size / 1.5;
+  $margin-bottom: $default-size / 2.5;
+  margin: $margin-top 0 $margin-bottom / 2.5 0;
+}
+
+@mixin wmg-subtitle-margin($scale: 1, $size: $font-size-small, $unit: 1px) {
+  $default-size: $scale * $size * $unit;
+  $margin-bottom: $default-size * 0.35;
+  $margin-top: 0;
+  $margin-right: 0;
+  $margin-left: 0;
+  margin: $margin-top $margin-right $margin-bottom $margin-left;
+}
+
+
+@mixin wmg-font-size($size: $font-size-small, $scale: 1, $unit: 1px) {
+  font-size: $size * $scale * $unit;
+}
+
+@mixin wmg-font-weight($type: normal) {
+  @if map-has-key($font-weight-types, $type) {
+    font-weight: map-get($font-weight-types, $type);
+  } @else {
+    font-weight: $font-weight-normal;
+  }
+}
+
+@mixin wmg-header-styles($font-size: $font-size-xxxx-large, $letter-spacing: normal, $font-weight: normal) {
+  $scale: wmg-get-font-size-scale($font-size);
+  @include wmg-font-size($font-size);
+  @include wmg-font-weight($font-weight);
+  @include wmg-header-margin($scale);
+  @include wmg-font-family;
+  letter-spacing: $letter-spacing;
+}
+
+@mixin wmg-subtitle-styles($font-size: $font-size-small) {
+  @include wmg-font-size($font-size);
+  @include wmg-font-family;
+}
+
+
+@mixin wmg-typography-h1($font-size: $font-size-xxxx-large) {
+  @include wmg-header-styles($font-size, -1.5px, light);
+}
+
+@mixin wmg-typography-h2($font-size: $font-size-xxx-large) {
+  @include wmg-header-styles($font-size, -0.5px, light);
+}
+
+@mixin wmg-typography-h3($font-size: $font-size-xx-large) {
+  @include wmg-header-styles($font-size, 0);
+}
+
+@mixin wmg-typography-h4($font-size: $font-size-x-large) {
+  @include wmg-header-styles($font-size, 0.25px);
+}
+
+@mixin wmg-typography-h5($font-size: $font-size-large) {
+  @include wmg-header-styles($font-size, 0);
+}
+
+@mixin wmg-typography-h6($font-size: 20) {
+  @include wmg-header-styles($font-size, 0.15px, semibold);
+}
+
+
+@mixin wmg-typography-subtitle1($font-size: $font-size-regular) {
+  @include wmg-subtitle-styles($font-size)
+}
+
+@mixin wmg-typography-subtitle2($font-size: $font-size-small) {
+  @include wmg-subtitle-styles($font-size);
+  @include wmg-font-weight(semibold)
+}
+
+@mixin wmg-typography-body1($font-size: 16 / $default-size) {
+  @include wmg-font-size($font-size)
+}
+
+@mixin wmg-typography-body2($font-size: $font-size-smal) {
+  @include wmg-font-size($font-size)
+}
+
+@mixin wmg-typography-button($font-size: $font-size-small) {
+  @include wmg-font-size($font-size);
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+@mixin wmg-typography-caption($font-size: 12) {
+  @include wmg-font-size($font-size);
+  letter-spacing: 0.4px;
+}
+
+@mixin wmg-typography-overline($font-size: 10) {
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
